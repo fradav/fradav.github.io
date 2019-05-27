@@ -19,7 +19,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Some thoughts from a C++ developper, about his job, computer science in general and who is trying (very hard) to put them in perspective.
 
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://fradav.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: Luingor
 github_username: fradav
 
