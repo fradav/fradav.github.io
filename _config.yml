@@ -16,7 +16,7 @@
 title: Tribulations of a C++ developper
 email: fradav@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Some thoughts from a coder about his job and computer science in general and who is trying (very hard) to put them in perspective.
+  Some thoughts from a C++ developper, about his job, computer science in general and who is trying (very hard) to put them in perspective.
 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
