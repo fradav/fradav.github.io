@@ -7,7 +7,7 @@ comments: true
 ---
 # Another one bites the dust
 As a developper, I got unabatted ambitions about software engineering : being agile, producing modular, ready-for-deployment, future-proof and endorsing state-of-the-art coding schemes[^1].
-Some time ago, someone in the internet was like "role-model" to me. His nickname is `vector-of-bool` and he embodied everything I wanted to be as C++ developper. He authored recent successful C++ tools, some of them had become vital for a lot of us in our jobs.
+Some time ago, someone in the internet was like as a "role-model" to me. His nickname is `vector-of-bool` and he embodied everything I wanted to be as C++ developper. He authored recent successful C++ tools, some of them had become vital for a lot of us in our jobs.
 
 Alas, it came to my attention than he just [throwed in the towel and explained why](https://vector-of-bool.github.io/2019/05/23/signals.html). There is really a lot to discuss in his post, about different subjects, which are a little intertwined. Let's enumerate a few :
 
