@@ -47,7 +47,7 @@ Why I'm telling you this? Because I want to put it in perspective. I worked in m
 
 ## Perspectives
 
-The so-called "complexity"  of our world is just this : an untractable and generalized level of interdependencies we now live in. And because of this, it is now no-sensical to establish a practical hierarchy of our knowledges fields. That's not saying they are all equal, which is absolutely not true : but _objective_ hierarchy is just totally unrelated to any established hiearchy in which we would fit, as person, coworkers, collaborators of those different knowledges fields. Those fields are arbitrary separated, and their respective boundaries are determined by social, academic, historic reasons. But for the most part we still think and do like this arbritrary breakdown of the knowledge is something objective.
+The so-called "complexity"  of our world is just this : an untractable and generalized level of interdependencies we now live in. And because of this, it is now no-sensical to establish a practical hierarchy of our knowledges fields. That's not saying they are all equal, that's is absolutely not true : but if there is an _objective_ hierarchy, it is unrelated to any established hiearchy in which we would fit, as person, coworkers, collaborators of those different knowledges fields. Those fields are arbitrary separated, and their respective boundaries are determined by social, academic, historic reasons. But for the most part we still think and do like this arbritrary breakdown of the knowledge is something objective.
 
 Guess what? The price we pay for the mismatch is high.
 
