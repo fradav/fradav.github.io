@@ -37,11 +37,11 @@ As a software engineer, I wanted something lasting, modular, something everybody
 
 <!-- But ultimately the hierarchy kicked in and I more or less had to comply.  -->
 
-Add this biased hierarchic mismatch to the normal "inter-disciplinary" friction, it translated as a growing bad feeling over the years. This feeling wasn't said, wasn't understood and just recently exploded in a pure outburst of hate directed first at myself and second at my "driving field" collaborator.
+This biased hierarchic mismatch, adding to the normal "inter-disciplinary" friction, fed an uneasy feeling over the years. This feeling wasn't said, wasn't understood and ultimately triggered a serious crisis.
 
 ## Context, part II
 
-Once the dust settled, I realized that I invested a lot of psychological energy not exactly to get the job done per se, but simply to keep at least the faintest motivation to precisely get it done. I wasn't even aware of this because from a pure general and abstract point of view my reasoning and my brain were still telling me that the project was worth it, from a scientific and a thematic point of view (even if I couldn't grasp all real intrications related to the involved speciality field) : it took myself a long time to get rid of the _hierarchic bias_ in my way to view and think my own role in the project.
+Once the dust settled, I realized that I invested a lot of psychological energy not exactly to get the job done per se, but simply to keep at least the faintest motivation to precisely get it done. I wasn't even aware of this because from a pure general and abstract point of view my reasoning and my brain were still telling me that the project was worth it, in its scientific and thematic aspects (even if I couldn't grasp all real intrications related to the involved speciality field) : it took myself a long time to get rid of the _hierarchic bias_ in my way to view and think my own role in the project.
 
 Why I'm telling you this? Because I want to put it in perspective. I worked in my leisure time in an artist collective where the hierarchic bias is inexistent[^5]. I felt as important as an engineer than the artist themselves, in fact, the distinction turned to be artificial because I became myself a source of artistic proposals, equally involved in the design and realization of the works. The comparison isn't convoluted at all in the sense it is precisely a "research collective", and the work done there is as important for our society and building our everyday vision of the world as it is in pure "scientific" work. In fact, it's real _working_ inter-disciplinarity, not just a claimed one.
 
