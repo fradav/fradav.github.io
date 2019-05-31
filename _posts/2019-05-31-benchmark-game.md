@@ -12,6 +12,8 @@ Every programs calling the [gmp library](https://gmplib.org/) have been removed 
 
 If we get the "low level languages" like [Chapel](https://www.chapel-lang.org/) and C/C++ out of the picture, then Haskell, Julia, Ocaml are really very good contenders as high level languages, but Julia high level memory consumption is a little daunting (Ok, Java's one is insane). I'm really disapointed about F#, which couldn't even do better than good ol' grand'pa lisp.
 
+![](/assets/images/pidigits-chart.png)
+
 <table>
       <tbody><tr>
         <th>×
@@ -144,4 +146,3 @@ If we get the "low level languages" like [Chapel](https://www.chapel-lang.org/) 
       </td></tr>></tbody></table>
 
 
-![](../images/pidigits-chart.png)
