@@ -6,8 +6,8 @@ categories: benchmark languages fsharp
 comments: true
 ---
 
-In my previous post regarding the pidigits benchmark comparison, I've been a little unfair towards F#, which I really like. Now it's time to amend.
 
+In my previous post regarding the pidigits benchmark comparison, I've been a little unfair towards F#, which I really like. Now it's time to amend.
 
 ## Background
 It's all [there, on the benchmarksgame site](https://benchmarksgame-team.pages.debian.net/benchmarksgame/description/pidigits.html#pidigits).
@@ -28,7 +28,7 @@ $$\pi=\left(2+\frac{1}{3} \times\right)\left(2+\frac{2}{5} \times\right)\left(2+
 
 which is no other than the composition of a dreadful _inﬁnite series of linear fractional transformations or Möbius transformations_ (you never guessed it.)
 
-> These are functions taking $x$ to $\frac{q x+r}{s x+t}$ for integers $q,r,s$ and $t$ with $q t-r s \neq 0$—that is, yielding a ratio of integer-coefﬁcient linear transformations of $x$. Such a transformation can be represented by the four coefﬁcients $q,r,s$ and $t$, and if they are arranged as a matrix $\left(\begin{array}{ll}{q} & {r} \\ {s} & {t}\end{array}\right)$ then function composition corresponds to matrix multiplication. 
+>  These are functions taking $x$ to $\frac{q x+r}{s x+t}$ for integers $q,r,s$ and $t$ with $q t-r s \neq 0$—that is, yielding a ratio of integer-coefﬁcient linear transformations of $x$. Such a transformation can be represented by the four coefﬁcients $q,r,s$ and $t$, and if they are arranged as a matrix $\left(\begin{array}{ll}{q} & {r} \\ {s} & {t}\end{array}\right)$ then function composition corresponds to matrix multiplication. 
 
 ## Code
 Long story short, a couple of simplifications and factorizations later, we got this beautiful haskell code :
@@ -75,7 +75,7 @@ More important :
 - `loop` does the printing, only printing digits by `n`-sized groups and printing the number of already computing so far.
 - `main` puts everything in motion, gets the command-line (number of asked digits), launchs the recursive `str` loop with the initial state and prints it as it goes with the composed `loop` function.
 
-## Ok, now let's do it in F#
+## Ok, now let's do it in `F#`
 
 First, some utility functions. This is to measure the computation time
 
@@ -96,7 +96,7 @@ And this is to plot a bar chart of the computation times wrt the number of digit
 
 
 ```fsharp
-// #load "XPlot.Plotly.Paket.fsx"
+#load "XPlot.Plotly.Paket.fsx"
 #load "XPlot.Plotly.fsx"
 
 open XPlot.Plotly
@@ -117,9 +117,16 @@ let plot f range =
 ```
 
 
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <script type="text/javascript">
+var require_save = require;
+var requirejs_save = requirejs;
+var define_save = define;
+require = requirejs = define = undefined;
+
+require = require_save;
+requirejs = requirejs_save;
+define = define_save;
 function ifsharpMakeImage(gd, fmt) {
     return Plotly.toImage(gd, {format: fmt})
         .then(function(url) {
@@ -140,6 +147,7 @@ function ifsharpMakeSvg(gd) {
     return ifsharpMakeImage(gd, 'svg');
 }
 </script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 
 
@@ -152,6 +160,10 @@ type F = F of bigint * bigint * bigint * bigint
 let ns = 
     Seq.unfold (fun k -> Some(F (k, 4I * k + 2I, 0I, 2I*k + 1I),k+1I) ) 1I
 
+let rec loop = function
+    | n, s, l when Seq.isEmpty l  -> printfn "%s\t:%d" (String.replicate n " ") s
+    | 0, s, xs                    -> printfn "\t:%d" s;loop (10,s,xs)
+    | n, s, l                     -> printf "%d" (Seq.head l); loop ((n-1),(s+1),(Seq.tail l |> Seq.cache))
 
 let flr x (F (q,r,s,t)) = (q*x + r) / (s*x + t)
 let comp (F (q,r,s,t)) (F (u,v,w,x)) = F (q*u + r*w, q*v + r*x, s*u + t*w, s*v + t*x) 
@@ -161,11 +173,6 @@ let rec str z l =
     match z,l with
     | z, l when y = flr 4I z -> seq { yield (int y); yield! str (comp (F (10I,-10I*y,0I,1I)) z) l }
     | z, l                   -> str (comp z (Seq.head l)) (Seq.tail l |> Seq.cache)
-
-let rec loop = function
-    | n, s, l when Seq.isEmpty l  -> printfn "%s\t:%d" (String.replicate n " ") s
-    | 0, s, xs                    -> printfn "\t:%d" s;loop (10,s,xs)
-    | n, s, l                     -> printf "%d" (Seq.head l); loop ((n-1),(s+1),(Seq.tail l |> Seq.cache))
 
 let mainPi n =
     ns
@@ -198,48 +205,34 @@ And that's because the `Seq.tail |> Seq.cache` doesn't trigger the [tail-recursi
 
 ### Lazyness (almost) everywhere
 
-Let's define our `LazyList` type with the usual car/cdr, the only difference with a "normal" list type is the "lazy" cdr. [Documentation for the lazy evaluation in F#](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/lazy-expressions)
+Let's define our `LazyList` type with the usual [car/cdr](https://en.wikipedia.org/wiki/CAR_and_CDR) semantics, the only difference with a "normal" list type is the "lazy" cdr. [Documentation for the lazy evaluation in F#](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/lazy-expressions). And add some usual "list" functions for good measure.
 
 
 ```fsharp
 type LazyList<'a> = 
-   | Empty 
-   | Cons of 'a * Lazy<LazyList<'a>> 
+   | Empty // Nil
+   | Cons of 'a * Lazy<LazyList<'a>> with // Cons (Car, Cdr)
+   // Generator
+   static member unfold (f : 's -> ('a*'s) option) (init : 's) : LazyList<'a> = 
+       match f init with
+       | None -> Empty 
+       | Some (a, s) -> Cons (a, lazy ( LazyList.unfold f s))
+   // Selecting n first elements    
+   static member take n (l : LazyList<'a>) : LazyList<'a> = 
+       match l with
+       | Empty -> Empty 
+       | Cons (a, t) -> if n = 0 then Empty 
+                        else Cons (a, lazy (LazyList.take (n-1) (t.Force())))
 ```
 
-Some of the usual suspects functions
-
-
-```fsharp
-// Generator function
-let rec unfold (f : 's -> ('a*'s) option) (init : 's) : LazyList<'a> = 
-      match f init with
-      | None -> Empty 
-      | Some (a, s) -> Cons (a, lazy ( unfold f s))
-
-// Select first n elements
-let rec take nr (l : LazyList<'a>) : LazyList<'a> = 
-      match l with
-      | Empty -> Empty 
-      | Cons (a, t) -> 
-         if nr = 0 then Empty 
-         else Cons (a, lazy (take (nr-1) (t.Force())))
-
-// Folding function
-let rec fold (f : 'a -> Lazy<'s> -> 's) (init : 's) (l : LazyList<'a>) : 's = 
-   match l with
-   | Empty -> init 
-   | Cons (a, t) -> f a (lazy (fold f init (t.Force())))
-```
+Now we convert all `Seq<T>` functions to `LasyList<T>`, and we could do a little more pattern matching along the way.
 
 
 ```fsharp
 type F = F of bigint * bigint * bigint * bigint
 
-let natNumbers = unfold (fun n -> Some (n, n+1I))
-
-let ns =
-    fold (fun k l -> Cons (F(k, 4I * k + 2I, 0I, 2I*k + 1I),l)) Empty (natNumbers 1I)
+let ns = 
+    LazyList.unfold (fun k -> Some(F (k, 4I * k + 2I, 0I, 2I*k + 1I),k+1I) ) 1I
 
 let rec loop = function
     | n, s, Empty       -> printfn "%s\t:%d" (String.replicate n " ") s
@@ -259,7 +252,7 @@ let rec str z l =
 let mainPi n =
     ns
     |> str (F(1I,0I,0I,1I))
-    |> take n
+    |> LazyList.take n
     |> (fun x -> loop (10,0,x))
 ```
 
@@ -285,12 +278,12 @@ plot mainPi [1000..1000..10000]
 
 
 
-<div id="ed5a09bb-5923-4411-9839-302c02340b89" style="width: 900px; height: 500px;"></div>
+<div id="5de4f619-573a-4491-9934-9edf6393e403" style="width: 900px; height: 500px;"></div>
 
 <script>
-    var data = [{"type":"bar","x":[0.078,0.315,0.709,1.223,2.055,2.693,3.519,4.604,6.033,7.439],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
+    var data = [{"type":"bar","x":[0.077,0.384,0.658,1.148,1.923,2.678,3.707,4.921,6.257,7.78],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
     var layout = {"xaxis":{"title":"Time","_isSubplotObj":true},"yaxis":{"title":"Input size","_isSubplotObj":true}};
-    Plotly.newPlot('ed5a09bb-5923-4411-9839-302c02340b89', data, layout);
+    Plotly.newPlot('5de4f619-573a-4491-9934-9edf6393e403', data, layout);
 </script>
 
 
@@ -418,19 +411,19 @@ plot mainPi [1000..1000..10000]
 
 
 
-<div id="dbde171e-5044-4b50-beb2-6780d2773377" style="width: 900px; height: 500px;"></div>
+<div id="ccf36c61-463c-4861-bb77-126a295af42f" style="width: 900px; height: 500px;"></div>
 
 <script>
-    var data = [{"type":"bar","x":[0.068,0.28,0.625,1.144,1.845,2.755,3.524,4.528,5.914,7.355],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
+    var data = [{"type":"bar","x":[0.074,0.275,0.644,1.241,1.962,2.712,3.716,4.832,6.136,7.899],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
     var layout = {"xaxis":{"title":"Time","_isSubplotObj":true},"yaxis":{"title":"Input size","_isSubplotObj":true}};
-    Plotly.newPlot('dbde171e-5044-4b50-beb2-6780d2773377', data, layout);
+    Plotly.newPlot('ccf36c61-463c-4861-bb77-126a295af42f', data, layout);
 </script>
 
 
 
 And that's about the best we could get at this without... a native bigint implementation. In actual .net core/.net framework, bigint is managed and NOT native. If we want the "native" bigint, we have to go a little hackish.
 
-## Mutable/native land or all hell breaks loose
+## Mutable/native land or "when all hell breaks loose"
 
 Let's get the native library (should work on linux/mac/windows there), [doc](https://machinecognitis.github.io/Math.Gmp.Native/)
 
@@ -549,12 +542,12 @@ plot mainPi [1000..1000..10000]
 
 
 
-<div id="33f9b58d-236c-476b-98df-767e5f65948b" style="width: 900px; height: 500px;"></div>
+<div id="e8bff331-0eba-414e-9989-e178718a52df" style="width: 900px; height: 500px;"></div>
 
 <script>
-    var data = [{"type":"bar","x":[0.009,0.042,0.087,0.147,0.227,0.353,0.486,0.633,0.839,1.02],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
+    var data = [{"type":"bar","x":[0.009,0.038,0.087,0.144,0.237,0.355,0.48,0.628,0.824,1.071],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
     var layout = {"xaxis":{"title":"Time","_isSubplotObj":true},"yaxis":{"title":"Input size","_isSubplotObj":true}};
-    Plotly.newPlot('33f9b58d-236c-476b-98df-767e5f65948b', data, layout);
+    Plotly.newPlot('e8bff331-0eba-414e-9989-e178718a52df', data, layout);
 </script>
 
 
@@ -603,17 +596,17 @@ plot mainPi [1000..1000..10000]
 
 
 
-<div id="21d2b0e7-12e4-4a94-a631-e96afb05320e" style="width: 900px; height: 500px;"></div>
+<div id="ad60cf3f-e796-45d7-a2c4-b53a84c8a906" style="width: 900px; height: 500px;"></div>
 
 <script>
-    var data = [{"type":"bar","x":[0.009,0.04,0.086,0.147,0.239,0.339,0.479,0.623,0.806,1.003],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
+    var data = [{"type":"bar","x":[0.009,0.035,0.085,0.163,0.248,0.353,0.489,0.633,0.812,1.031],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
     var layout = {"xaxis":{"title":"Time","_isSubplotObj":true},"yaxis":{"title":"Input size","_isSubplotObj":true}};
-    Plotly.newPlot('21d2b0e7-12e4-4a94-a631-e96afb05320e', data, layout);
+    Plotly.newPlot('ad60cf3f-e796-45d7-a2c4-b53a84c8a906', data, layout);
 </script>
 
 
 
 ## Conclusion
 
-The road from haskell to F#-idiomatic and F#-pragmatic (native collided) is a little bumpy one.
+The road from haskell to F#-idiomatic and F#-pragmatic (native collided) is a little bumpy one. We could import high-performance "native" code and still get a nice FP touch over it, thanks to the pragmatic approach of the language.
 
