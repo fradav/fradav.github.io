@@ -19,13 +19,10 @@ All right, it's based on this formula:
 $$\frac{\pi}{4}=\sum_{i=0}^{\infty} \frac{(-1)^{i}}{2 i+1}$$
 
 And then 
-
 $$\pi=2+\frac{1}{3}\left(2+\frac{2}{5}\left(2+\frac{3}{7}\left(\cdots\left(2+\frac{i}{2 i+1}(\cdots)\right)\right)\right)\right)$$
 
 And then, quoting the paper, we can see this as 
-
 $$\pi=\left(2+\frac{1}{3} \times\right)\left(2+\frac{2}{5} \times\right)\left(2+\frac{3}{7} \times\right) \cdots\left(2+\frac{i}{2 i+1} \times\right) \cdots$$
-
 which is no other than the composition of a dreadful _inﬁnite series of linear fractional transformations or Möbius transformations_ (you never guessed it.)
 
 >  These are functions taking $x$ to $\frac{q x+r}{s x+t}$ for integers $q,r,s$ and $t$ with $q t-r s \neq 0$—that is, yielding a ratio of integer-coefﬁcient linear transformations of $x$. Such a transformation can be represented by the four coefﬁcients $q,r,s$ and $t$, and if they are arranged as a matrix $\left(\begin{array}{ll}{q} & {r} \\ {s} & {t}\end{array}\right)$ then function composition corresponds to matrix multiplication. 
@@ -75,7 +72,7 @@ More important :
 - `loop` does the printing, only printing digits by `n`-sized groups and printing the number of already computing so far.
 - `main` puts everything in motion, gets the command-line (number of asked digits), launchs the recursive `str` loop with the initial state and prints it as it goes with the composed `loop` function.
 
-## Ok, now let's do it in `F#`
+## Ok, now let's do it in F# #
 
 First, some utility functions. This is to measure the computation time
 
@@ -96,7 +93,7 @@ And this is to plot a bar chart of the computation times wrt the number of digit
 
 
 ```fsharp
-#load "XPlot.Plotly.Paket.fsx"
+// #load "XPlot.Plotly.Paket.fsx"
 #load "XPlot.Plotly.fsx"
 
 open XPlot.Plotly
@@ -111,22 +108,30 @@ let plot f range =
         |> Seq.map (fun x -> (x,duration (fun _ -> f x)))
     let c =
         Chart.Bar data
-        |> Chart.WithXTitle "Time"
-        |> Chart.WithYTitle "Input size"
+        |> Chart.WithXTitle "Time in seconds"
+        |> Chart.WithYTitle "Number of digits"
     c
 ```
 
 
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <script type="text/javascript">
 var require_save = require;
 var requirejs_save = requirejs;
 var define_save = define;
-require = requirejs = define = undefined;
-
+var MathJax_save = MathJax;
+MathJax = require = requirejs = define = undefined;
+/**
+* plotly.js v1.47.4
+* Copyright 2012-2019, Plotly, Inc.
+* All rights reserved.
+* Licensed under the MIT license
+*/
 require = require_save;
 requirejs = requirejs_save;
 define = define_save;
+MathJax = MathJax_save;
 function ifsharpMakeImage(gd, fmt) {
     return Plotly.toImage(gd, {format: fmt})
         .then(function(url) {
@@ -147,7 +152,6 @@ function ifsharpMakeSvg(gd) {
     return ifsharpMakeImage(gd, 'svg');
 }
 </script>
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 
 
@@ -194,7 +198,7 @@ mainPi 27
 
 
 
-Pretty straightforward from the the haskell code uh? Except that...
+Pretty straightforward from the haskell implementation uh? Except that...
 if we run 
 ```fsharp
 mainPi 5000
@@ -278,12 +282,12 @@ plot mainPi [1000..1000..10000]
 
 
 
-<div id="5de4f619-573a-4491-9934-9edf6393e403" style="width: 900px; height: 500px;"></div>
+<div id="cb7df023-8f5b-4f94-8b2f-07372980186e" style="width: 900px; height: 500px;"></div>
 
 <script>
-    var data = [{"type":"bar","x":[0.077,0.384,0.658,1.148,1.923,2.678,3.707,4.921,6.257,7.78],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
-    var layout = {"xaxis":{"title":"Time","_isSubplotObj":true},"yaxis":{"title":"Input size","_isSubplotObj":true}};
-    Plotly.newPlot('5de4f619-573a-4491-9934-9edf6393e403', data, layout);
+    var data = [{"type":"bar","x":[0.076,0.278,0.636,1.224,2.014,2.746,3.454,4.546,5.823,7.284],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
+    var layout = {"xaxis":{"title":"Time in seconds","_isSubplotObj":true},"yaxis":{"title":"Number of digits","_isSubplotObj":true}};
+    Plotly.newPlot('cb7df023-8f5b-4f94-8b2f-07372980186e', data, layout);
 </script>
 
 
@@ -411,12 +415,12 @@ plot mainPi [1000..1000..10000]
 
 
 
-<div id="ccf36c61-463c-4861-bb77-126a295af42f" style="width: 900px; height: 500px;"></div>
+<div id="09273672-f32e-4235-888b-c3a7e6384780" style="width: 900px; height: 500px;"></div>
 
 <script>
-    var data = [{"type":"bar","x":[0.074,0.275,0.644,1.241,1.962,2.712,3.716,4.832,6.136,7.899],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
-    var layout = {"xaxis":{"title":"Time","_isSubplotObj":true},"yaxis":{"title":"Input size","_isSubplotObj":true}};
-    Plotly.newPlot('ccf36c61-463c-4861-bb77-126a295af42f', data, layout);
+    var data = [{"type":"bar","x":[0.079,0.266,0.624,1.185,1.775,2.498,3.427,4.506,5.758,7.179],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
+    var layout = {"xaxis":{"title":"Time in seconds","_isSubplotObj":true},"yaxis":{"title":"Number of digits","_isSubplotObj":true}};
+    Plotly.newPlot('09273672-f32e-4235-888b-c3a7e6384780', data, layout);
 </script>
 
 
@@ -501,9 +505,9 @@ let inline flr j =
     gmp_lib.mpz_get_si(w)
 ```
 
-What's all this fuss is about? Now we store as a mutable (native) variables the four bigint of our `z` as a global state. In order to mutate this `z`-state with the result of the `comp` function, we have to provide two differents mutating functions, depending on where `z` is in the `comp` arguments list, on the right or on the left. The `u,v,w` are temporaries. The native functions `gmp_lib.mpz_[add,mul,tdiv,get]`are always storing the results in one of their arguments (generally, the first one, passed by reference), that's a pretty standard API for `C` libraries.
+What's all this fuss is about? Now we store as mutable (native) variables the four bigint of our former `z` as a global state. In order to mutate this `z`-state with the result of the `comp` function, we have to provide two differents mutating functions, depending on where `z` is in the `comp` arguments list, on the right or on the left. The `u,v,w` are temporaries. The native functions `gmp_lib.mpz_[add,mul,tdiv,get]`are always storing the results in one of their arguments (generally, the first one, passed by reference), that's a pretty standard API for `C` libraries.
 
-Now let's modify a bit our folder function to account for mutation side effects for `z`
+Now let's modify a bit our (un)folder function to account for mutation side effects for `z`.
 
 
 ```fsharp
@@ -542,12 +546,12 @@ plot mainPi [1000..1000..10000]
 
 
 
-<div id="e8bff331-0eba-414e-9989-e178718a52df" style="width: 900px; height: 500px;"></div>
+<div id="4b545cac-7c0c-425f-a2ab-5ebf07c1f152" style="width: 900px; height: 500px;"></div>
 
 <script>
-    var data = [{"type":"bar","x":[0.009,0.038,0.087,0.144,0.237,0.355,0.48,0.628,0.824,1.071],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
-    var layout = {"xaxis":{"title":"Time","_isSubplotObj":true},"yaxis":{"title":"Input size","_isSubplotObj":true}};
-    Plotly.newPlot('e8bff331-0eba-414e-9989-e178718a52df', data, layout);
+    var data = [{"type":"bar","x":[0.008,0.036,0.087,0.144,0.227,0.33,0.46,0.607,0.784,0.971],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
+    var layout = {"xaxis":{"title":"Time in seconds","_isSubplotObj":true},"yaxis":{"title":"Number of digits","_isSubplotObj":true}};
+    Plotly.newPlot('4b545cac-7c0c-425f-a2ab-5ebf07c1f152', data, layout);
 </script>
 
 
@@ -596,12 +600,12 @@ plot mainPi [1000..1000..10000]
 
 
 
-<div id="ad60cf3f-e796-45d7-a2c4-b53a84c8a906" style="width: 900px; height: 500px;"></div>
+<div id="b8e7a676-9864-42e6-9b14-9ef63616123e" style="width: 900px; height: 500px;"></div>
 
 <script>
-    var data = [{"type":"bar","x":[0.009,0.035,0.085,0.163,0.248,0.353,0.489,0.633,0.812,1.031],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
-    var layout = {"xaxis":{"title":"Time","_isSubplotObj":true},"yaxis":{"title":"Input size","_isSubplotObj":true}};
-    Plotly.newPlot('ad60cf3f-e796-45d7-a2c4-b53a84c8a906', data, layout);
+    var data = [{"type":"bar","x":[0.009,0.034,0.078,0.144,0.225,0.354,0.477,0.608,0.784,0.969],"y":[1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],"orientation":"h"}];
+    var layout = {"xaxis":{"title":"Time in seconds","_isSubplotObj":true},"yaxis":{"title":"Number of digits","_isSubplotObj":true}};
+    Plotly.newPlot('b8e7a676-9864-42e6-9b14-9ef63616123e', data, layout);
 </script>
 
 
@@ -609,4 +613,3 @@ plot mainPi [1000..1000..10000]
 ## Conclusion
 
 The road from haskell to F#-idiomatic and F#-pragmatic (native collided) is a little bumpy one. We could import high-performance "native" code and still get a nice FP touch over it, thanks to the pragmatic approach of the language.
-

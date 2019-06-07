@@ -45,13 +45,15 @@ Once the dust settled, I realized that I invested a lot of psychological energy 
 
 Why I'm telling you this? Because I want to put it in perspective. I worked in my leisure time in an artist collective where the hierarchic bias is inexistent[^5]. I felt as important as an engineer than the artist themselves, in fact, the distinction turned to be artificial because I became myself a source of artistic proposals, equally involved in the design and realization of the works. The comparison isn't convoluted at all in the sense it is precisely a "research collective", and the work done there is as important for our society and building our everyday vision of the world as it is in pure "scientific" work. In fact, it's real _working_ inter-disciplinarity, not just a claimed one.
 
+_So, if we step a little back and take a rational look, the so-called "driving" field is only driving not because of his intrisic merit or superiority but because of its social status and the difficulty to access to the data and underlying concepts. This is reflected by the fact that most of the persons I encountered in this driving field had reached some recognition status, are satisfied with it and don't see the pedagogic question (transmission of expertise) as a vital one._
+
 ## Perspectives
 
-The so-called "complexity"  of our world is just this : an untractable and generalized level of interdependencies we now live in. And because of this, it is now no-sensical to establish a practical hierarchy of our knowledges fields. That's not saying they are all equal, that's is absolutely not true : but if there is an _objective_ hierarchy, it is unrelated to any established hiearchy in which we may fit, as person, coworkers, collaborators of those different knowledges fields. Those fields are arbitrary separated, and their respective boundaries are determined by social, academic, historic reasons. But for the most part we still think and do like this arbritrary breakdown of the knowledge is something objective.
+The so-called "complexity"  of our world is just this : an untractable and generalized level of interdependencies we now live in. And because of this, it is now no-sensical to establish a practical hierarchy of our knowledges fields. That's not saying they are all equal, that's absolutely not true : but if there is an _objective_ hierarchy, it is unrelated to any established hiearchy in which we may fit, as person, coworkers, collaborators of those different knowledges fields. Those fields are arbitrary separated, and their respective boundaries are determined by social, academic, historic or even economic reasons. 
 
-Guess what? The price we pay for the mismatch is high.
+But for the most part we still think and act like this arbritrary breakdown of the knowledge is something objective and given "as is".
 
-Incredibly high.
+Whatever the scope, we pay a high price for mismatching reality with an unquestioned and imaginary hierarchy.
 
 ## footnotes
 
