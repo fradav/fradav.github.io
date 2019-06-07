@@ -36,7 +36,7 @@ auto indirect_lambda(const Rng& v) {
 }
 ```
 
-Notice how we enforced a range concept with the `CPP_template`. And we need an indirect comparison lambda, which does the same thing than our previous lambda, but "functored" with a comparison function. We're defaulting with the less<> function if unspecified.
+Notice how we enforced a range concept with the `CPP_template`. And we need an indirect comparison lambda, which does the same thing than our previous lambda, but "functored" with a comparison function. We're defaulting to the `less<>` function if unspecified.
 
 ```cpp
 template<class Rng>
@@ -53,8 +53,8 @@ Ok, nothing too fancy there.
 
 ```cpp
 int main() {
-    const std::default_random_engine gen(123456);
-    const std::uniform_int_distribution dis(-10,10);
+    std::default_random_engine gen(123456);
+    std::uniform_int_distribution dis(-10,10);
     const size_t n = 10;
     const auto& x = view::generate_n([&gen,&dis](){ return dis(gen); },n) | to_vector;
     const auto& y = view::generate_n([&gen,&dis](){ return dis(gen); },n) | to_vector;
@@ -65,25 +65,25 @@ int main() {
 ```
 Output:
 ```plain
-Original vector l : 
+input vector x : 
 [-9,-10,0,5,-2,4,4,-4,-2,8]
-Another vector m : 
+output vector y : 
 [-6,-10,-10,-6,-4,-3,-3,-8,8,3]
 ```
 
-We generated (with a fixed seed for reproductibility purpose) two random vector of 10 signed integer. Let's say 
+We generated (with a fixed seed for reproductibility purpose) two random vector of 10 signed integer. 
 
 ```cpp
     const auto& p = view::iota(0_z,n) 
         | to_vector 
-        | action::sort(indirect_comparison_lambda(l));
+        | action::sort(indirect_comparison_lambda(x));
 
     std::cout << "Sorted indices of x : " << std::endl ;
     std::cout << (p | view::all) << std::endl;
 ```
 Output:
 ```plain
-Sorted indices of l : 
+Sorted indices of x : 
 [1,0,7,4,8,2,5,6,3,9]
 ```
 
@@ -92,7 +92,7 @@ Sorted indices of l :
 ```cpp
     std::cout << "let's permute y in a lazy-view with the sorted indices of x : " << std::endl;
     const auto& ypermuted = p | view::transform(indirect_lambda(y));
-    std::cout << ypermuted1 << std::endl;
+    std::cout << ypermuted << std::endl;
 ```
 
 Output:
@@ -106,5 +106,6 @@ Here comes the magic[^1]. If you paid attention you noticed we pretty much decla
 
 Now we want to do that in a more general way, and we'll write an ad hoc proxy range for accessing y, through whatever sorted indices of an input x. That's what we'll see in the part II.
 
+[Code](https://github.com/fradav/fradav.github.io/blob/master/assets/cpp/rnagev3-part1.cpp)
 
 [^1]: For the eventual FP-ninjas reading this, I'm aware it's pretty basic, but in C++ land, it's something that a few years ago, we wouldn't have dreamt of being able to do without resorting to a full fledged class writing.]. 
