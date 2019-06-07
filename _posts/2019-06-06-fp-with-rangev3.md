@@ -108,4 +108,4 @@ Now we want to do that in a more general way, and we'll write an ad hoc proxy ra
 
 [Code](https://github.com/fradav/fradav.github.io/blob/master/assets/cpp/rnagev3-part1.cpp)
 
-[^1]: For the eventual FP-ninjas reading this, I'm aware it's pretty basic, but in C++ land, it's something that a few years ago, we wouldn't have dreamt of being able to do without resorting to a full fledged class writing.]. 
+[^1]: For the eventual FP-ninjas reading this, I'm aware it's pretty basic, but in C++ land, it's something that a few years ago, we wouldn't have dreamt of being able to do without resorting to a full fledged class writing. 
