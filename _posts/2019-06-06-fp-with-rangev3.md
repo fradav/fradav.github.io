@@ -106,6 +106,6 @@ Here comes the magic[^1]. If you paid attention you noticed we pretty much decla
 
 Now we want to do that in a more general way, and we'll write an ad hoc proxy range for accessing y, through whatever sorted indices of an input x. That's what we'll see in the part II.
 
-[Code](https://github.com/fradav/fradav.github.io/blob/master/assets/cpp/rnagev3-part1.cpp)
+[Code](https://github.com/fradav/fradav.github.io/blob/master/assets/cpp/rangev3-part1.cpp)
 
 [^1]: For the eventual FP-ninjas reading this, I'm aware it's pretty basic, but in C++ land, it's something that a few years ago, we wouldn't have dreamt of being able to do without resorting to a full fledged class writing. 
