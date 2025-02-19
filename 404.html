@@ -4,7 +4,14 @@ layout: default
 
 
   <script type="text/javascript">
-    var segmentCount = 1;
-    var l = window.location;
-    l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : ''));
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        '/your-subdirectory' + // ADD THIS LINE
+        '/?' + 'redirect=true' +
+        // DON'T INCLUDE /your-subdirectory IN REDIRECT QUERY
+        (l.pathname ? '&pathname=' + l.pathname.replace('/your-subdirectoy', '').replace(/\//g, '%2F').replace(/&/g, '%26') : '') +
+        (l.search ? '&query=' + l.search.replace(/\//g, '%2F').replace(/&/g, '%26') : '') +
+        l.hash
+      );
   </script>
